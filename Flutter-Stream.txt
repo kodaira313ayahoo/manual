@@ -1,20 +1,20 @@
 
 # Flutter-Stream
 
-Stream‚Æ‚¢‚¤¬‚³‚¢‚ªA‘S‚­—‰ğ‚Å‚«‚Ä‚¢‚È‚¢ƒe[ƒ}‚É‚Â‚¢‚Ä‚Ü‚Æ‚ß‚é
+Streamã¨ã„ã†å°ã•ã„ãŒã€å…¨ãç†è§£ã§ãã¦ã„ãªã„ãƒ†ãƒ¼ãƒã«ã¤ã„ã¦ã¾ã¨ã‚ã‚‹
 
 
-## Stream‚Ìì‚è•û
+## Streamã®ä½œã‚Šæ–¹
 
 
 Stream .periodic
 https://dev.to/nitishk72/understanding-streams-in-flutter-dart-2pb8
 
-yStreamBuilder ‚à‘g‚İ‡‚í‚¹‚½—á:Œö®ƒTƒCƒgz
+ã€StreamBuilder ã‚‚çµ„ã¿åˆã‚ã›ãŸä¾‹:å…¬å¼ã‚µã‚¤ãƒˆã€‘
 
 https://api.flutter.dev/flutter/widgets/StreamBuilder-class.html
 
-‚±‚±‚ÅĞ‰î‚³‚ê‚Ä‚¢‚é ƒ_ƒ~[‚ÌStream
+ã“ã“ã§ç´¹ä»‹ã•ã‚Œã¦ã„ã‚‹ ãƒ€ãƒŸãƒ¼ã®Stream
 
   Stream<int> _bids = (() async* {
     await Future<void>.delayed(Duration(seconds: 1));
@@ -24,7 +24,7 @@ https://api.flutter.dev/flutter/widgets/StreamBuilder-class.html
 
 
 
-/// snapshot.connectionState ‚Ìí—Ş
+/// snapshot.connectionState ã®ç¨®é¡
 
 switch (snapshot.connectionState) {
   case ConnectionState.none:
@@ -47,15 +47,15 @@ if (snapshot.hasError) {
 snapshot.hasData
 
 
-ã‹L‚ÍAwFutureƒXƒe[ƒ^ƒXŠÇ—x
+ä¸Šè¨˜ã¯ã€ã€Futureã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ç®¡ç†ã€
    AsyncSnapshot.connectionState
-‚Æ“¯‚¶‚æ‚¤‚ÉŒ©‚¦‚éBBB
+ã¨åŒã˜ã‚ˆã†ã«è¦‹ãˆã‚‹ã€‚ã€‚ã€‚
 
 
 
-y‚±‚¿‚ç‚àŒö®ƒTƒCƒgz
+ã€ã“ã¡ã‚‰ã‚‚å…¬å¼ã‚µã‚¤ãƒˆã€‘
 https://dart.dev/articles/libraries/creating-streams
-‚±‚±‚Å‚ÍA‰º‹L‚Ìƒ_ƒ~[Stream‚ªĞ‰î‚³‚ê‚Ä‚¢‚é
+ã“ã“ã§ã¯ã€ä¸‹è¨˜ã®ãƒ€ãƒŸãƒ¼StreamãŒç´¹ä»‹ã•ã‚Œã¦ã„ã‚‹
 
 
 Stream<int> timedCounter(Duration interval, [int maxCount]) async* {
@@ -80,18 +80,18 @@ Stream<T> streamFromFutures<T>(Iterable<Future<T>> futures) async* {
 
 
 
-‚±‚ÌŠÖ”‚ÍAV‚µ‚¢future‚ğ”½•œ‰Â”\‚Èfuture‚É—v‹‚µA‚»‚Ìfuture‚ğ‘Ò‹@‚µAŒ‹‰Ê‚Ì’l‚ğo—Í‚µ‚Ä‚©‚çƒ‹[ƒv‚µ‚Ü‚·B
+ã“ã®é–¢æ•°ã¯ã€æ–°ã—ã„futureã‚’åå¾©å¯èƒ½ãªfutureã«è¦æ±‚ã—ã€ãã®futureã‚’å¾…æ©Ÿã—ã€çµæœã®å€¤ã‚’å‡ºåŠ›ã—ã¦ã‹ã‚‰ãƒ«ãƒ¼ãƒ—ã—ã¾ã™ã€‚
 
-‰½‚à‚È‚¢‚Æ‚±‚ë‚©‚çƒXƒgƒŠ[ƒ€‚ğ\’z‚·‚éasync *ŠÖ”‚ğ‚Â‚±‚Æ‚Í‚ß‚Á‚½‚É‚ ‚è‚Ü‚¹‚ñB 
-‚Ç‚±‚©‚©‚çƒf[ƒ^‚ğæ“¾‚·‚é•K—v‚ª‚ ‚èA‚Ù‚Æ‚ñ‚Ç‚Ìê‡A‚Ç‚±‚©‚ª•Ê‚ÌƒXƒgƒŠ[ƒ€‚Å‚·B 
-ã‹L‚Ìˆê˜A‚Ìæ•¨‚Ì‚æ‚¤‚ÉAƒf[ƒ^‚ª‘¼‚Ì”ñ“¯ŠúƒCƒxƒ“ƒgƒ\[ƒX‚©‚çæ“¾‚³‚ê‚éê‡‚à‚ ‚è‚Ü‚·B
- ‚½‚¾‚µA‘½‚­‚Ìê‡Aasync *ŠÖ”‚Í’Pƒ‚·‚¬‚ÄA•¡”‚Ìƒf[ƒ^ƒ\[ƒX‚ğŠÈ’P‚Éˆ—‚Å‚«‚Ü‚¹‚ñB 
- ‚»‚±‚ÅAStreamControllerƒNƒ‰ƒX‚ª“oê‚µ‚Ü‚·B
-
-
+ä½•ã‚‚ãªã„ã¨ã“ã‚ã‹ã‚‰ã‚¹ãƒˆãƒªãƒ¼ãƒ ã‚’æ§‹ç¯‰ã™ã‚‹async *é–¢æ•°ã‚’æŒã¤ã“ã¨ã¯ã‚ã£ãŸã«ã‚ã‚Šã¾ã›ã‚“ã€‚ 
+ã©ã“ã‹ã‹ã‚‰ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹å¿…è¦ãŒã‚ã‚Šã€ã»ã¨ã‚“ã©ã®å ´åˆã€ã©ã“ã‹ãŒåˆ¥ã®ã‚¹ãƒˆãƒªãƒ¼ãƒ ã§ã™ã€‚ 
+ä¸Šè¨˜ã®ä¸€é€£ã®å…ˆç‰©ã®ã‚ˆã†ã«ã€ãƒ‡ãƒ¼ã‚¿ãŒä»–ã®éåŒæœŸã‚¤ãƒ™ãƒ³ãƒˆã‚½ãƒ¼ã‚¹ã‹ã‚‰å–å¾—ã•ã‚Œã‚‹å ´åˆã‚‚ã‚ã‚Šã¾ã™ã€‚
+ ãŸã ã—ã€å¤šãã®å ´åˆã€async *é–¢æ•°ã¯å˜ç´”ã™ãã¦ã€è¤‡æ•°ã®ãƒ‡ãƒ¼ã‚¿ã‚½ãƒ¼ã‚¹ã‚’ç°¡å˜ã«å‡¦ç†ã§ãã¾ã›ã‚“ã€‚ 
+ ãã“ã§ã€StreamControllerã‚¯ãƒ©ã‚¹ãŒç™»å ´ã—ã¾ã™ã€‚
 
 
-yStreamBuilder ‚à‘g‚İ‡‚í‚¹‚½—áz
+
+
+ã€StreamBuilder ã‚‚çµ„ã¿åˆã‚ã›ãŸä¾‹ã€‘
 
 import 'package:flutter/material.dart';
 
@@ -156,7 +156,7 @@ class HomePage extends StatelessWidget {
 
 
 
-yStreamBuilder ‚à‘g‚İ‡‚í‚¹‚½—á: 2z
+ã€StreamBuilder ã‚‚çµ„ã¿åˆã‚ã›ãŸä¾‹: 2ã€‘
 
 
 import 'package:flutter/material.dart';
@@ -237,9 +237,9 @@ class Story {
 
 
 
-## List<ƒNƒ‰ƒX> ‚ğ•Ô‚µ‚½‚¢
+## List<ã‚¯ãƒ©ã‚¹> ã‚’è¿”ã—ãŸã„
 
-Stream<List<Tasks>> ‚È‚Ç‚ÌƒXƒgƒŠ[ƒ€‚ğ•Ô‚·‚æ‚¤‚É‚µ‚½‚¢B
+Stream<List<Tasks>> ãªã©ã®ã‚¹ãƒˆãƒªãƒ¼ãƒ ã‚’è¿”ã™ã‚ˆã†ã«ã—ãŸã„ã€‚
 
 
 abstract class Story with _$Story {
@@ -392,11 +392,11 @@ final StreamController<List<Member>> _membersController = StreamController<List<
 ## periodic
 
 Example 1:
-Stream .periodic() ¨ Stream < T >
+Stream .periodic() â†’ Stream < T >
 
 /// asynchronous data 
 main() async {
-  /// ƒCƒ“ƒ^[ƒoƒ‹‚ğİ’è
+  /// ã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒ«ã‚’è¨­å®š
   Duration interval = Duration(seconds: 2);
   
   /// Stream .periodic: Creates a stream that repeatedly emits events at period intervals.
@@ -407,7 +407,7 @@ main() async {
   }
 }
 
-/// ƒR[ƒ‹ƒoƒbƒNŠÖ” modify the given value to even number.
+/// ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•° modify the given value to even number.
 int callbank(int value){
   return ( value + 1 ) * 2;
 }
@@ -417,7 +417,7 @@ int callbank(int value){
 ## take
 
 Example 2:
-Stream.take(int count) ¨ Stream < T >
+Stream.take(int count) â†’ Stream < T >
 
 
 // asynchronous data 
@@ -474,9 +474,9 @@ Future<String> getData() async {
 
 
 
-## mockito ‚ğg‚¤
+## mockito ã‚’ä½¿ã†
 
-”²ˆURL
+æŠœç²‹URL
 https://github.com/dart-lang/mockito/issues/223
 
 class Foo {
@@ -542,33 +542,33 @@ Try the thenAnswer instead of thenReturn : Answer
  Simply mock it. No need to use NetworkStream or Stream in your tests (refer to the last bit of code in the original question, it contains 
 
 
-## —pŒê
+## ç”¨èª
 
 sink 
 listen
 
 
 
-## Œö®ƒ}ƒjƒ…ƒAƒ‹
+## å…¬å¼ãƒãƒ‹ãƒ¥ã‚¢ãƒ«
 
 Stream<T> class
 https://api.flutter.dev/flutter/dart-async/Stream-class.html
-  ¨¨ –ğ‚É—§‚Â‚±‚Æ‚Í‰½‚à‘‚¢‚Ä‚¢‚È‚¢‚æ‚¤‚ÉŒ©‚¦‚é
+  â†’â†’ å½¹ã«ç«‹ã¤ã“ã¨ã¯ä½•ã‚‚æ›¸ã„ã¦ã„ãªã„ã‚ˆã†ã«è¦‹ãˆã‚‹
   
 
 
 # BLoC/RxDart
 
-BLoC/RxDart ‚ğ©•ª‚ªƒCƒ`‚©‚çg‚¤‚±‚Æ‚Í‚È‚¢‚ªA
-‚æ‚­‚ ‚éƒTƒ“ƒvƒ‹‚ª BLoC/RxDart ‚ğg‚Á‚½‚à‚Ì‚É‚È‚Á‚Ä‚¢‚ÄA
-‚»‚Ìƒ\[ƒXƒR[ƒh‚ğ—‰ğ‚µ‚½‚èAProvider/Riverpod ‚É•ÏX‚·‚éê‡‚ÉA
-BLoC/RxDart ‚Ì’m¯‚ª•K—v‚É‚È‚é‚±‚Æ‚ª‘½‚¢B
+BLoC/RxDart ã‚’è‡ªåˆ†ãŒã‚¤ãƒã‹ã‚‰ä½¿ã†ã“ã¨ã¯ãªã„ãŒã€
+ã‚ˆãã‚ã‚‹ã‚µãƒ³ãƒ—ãƒ«ãŒ BLoC/RxDart ã‚’ä½¿ã£ãŸã‚‚ã®ã«ãªã£ã¦ã„ã¦ã€
+ãã®ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã‚’ç†è§£ã—ãŸã‚Šã€Provider/Riverpod ã«å¤‰æ›´ã™ã‚‹å ´åˆã«ã€
+BLoC/RxDart ã®çŸ¥è­˜ãŒå¿…è¦ã«ãªã‚‹ã“ã¨ãŒå¤šã„ã€‚
 
-yBLoC/RxDart“ü–åz Flutter‚ÌŒö®ƒ`ƒ…[ƒgƒŠƒAƒ‹‚ğ‘‚«Š·‚¦‚é
+ã€BLoC/RxDartå…¥é–€ã€‘ Flutterã®å…¬å¼ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«ã‚’æ›¸ãæ›ãˆã‚‹
 https://qiita.com/sensuikan1973/items/64f1a6235bd8ecaf9067
-  Startup Word Generator ‚Æ ‚¨‹C‚É“ü‚è‹@”\‚Ì‚â‚ÂB
+  Startup Word Generator ã¨ ãŠæ°—ã«å…¥ã‚Šæ©Ÿèƒ½ã®ã‚„ã¤ã€‚
 
 
-Stream/RxDart‰SÒ‚Ì‚½‚ß‚ÌBLoC“ü–å
+Stream/RxDartåˆå¿ƒè€…ã®ãŸã‚ã®BLoCå…¥é–€
 https://qiita.com/tetsufe/items/521014ddc59f8d1df581
 
