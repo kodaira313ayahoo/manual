@@ -1,0 +1,574 @@
+
+# Flutter-Stream
+
+Streamという小さいが、全く理解できていないテーマについてまとめる
+
+
+## Streamの作り方
+
+
+Stream .periodic
+https://dev.to/nitishk72/understanding-streams-in-flutter-dart-2pb8
+
+【StreamBuilder も組み合わせた例:公式サイト】
+
+https://api.flutter.dev/flutter/widgets/StreamBuilder-class.html
+
+ここで紹介されている ダミーのStream
+
+  Stream<int> _bids = (() async* {
+    await Future<void>.delayed(Duration(seconds: 1));
+    yield 1;
+    await Future<void>.delayed(Duration(seconds: 1));
+  })();
+
+
+
+/// snapshot.connectionState の種類
+
+switch (snapshot.connectionState) {
+  case ConnectionState.none:
+  
+  
+  case ConnectionState.waiting:
+  
+  
+  case ConnectionState.active:
+  
+  
+  case ConnectionState.done:
+  
+  
+
+
+
+if (snapshot.hasError) {
+
+snapshot.hasData
+
+
+上記は、『Futureステータス管理』
+   AsyncSnapshot.connectionState
+と同じように見える。。。
+
+
+
+【こちらも公式サイト】
+https://dart.dev/articles/libraries/creating-streams
+ここでは、下記のダミーStreamが紹介されている
+
+
+Stream<int> timedCounter(Duration interval, [int maxCount]) async* {
+  int i = 0;
+  while (true) {
+    await Future.delayed(interval);
+    yield i++;
+    if (i == maxCount) break;
+  }
+}
+
+
+
+/// more useful example
+Stream<T> streamFromFutures<T>(Iterable<Future<T>> futures) async* {
+  for (var future in futures) {
+    var result = await future;
+    yield result;
+  }
+}
+
+
+
+
+この関数は、新しいfutureを反復可能なfutureに要求し、そのfutureを待機し、結果の値を出力してからループします。
+
+何もないところからストリームを構築するasync *関数を持つことはめったにありません。 
+どこかからデータを取得する必要があり、ほとんどの場合、どこかが別のストリームです。 
+上記の一連の先物のように、データが他の非同期イベントソースから取得される場合もあります。
+ ただし、多くの場合、async *関数は単純すぎて、複数のデータソースを簡単に処理できません。 
+ そこで、StreamControllerクラスが登場します。
+
+
+
+
+【StreamBuilder も組み合わせた例】
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(
+    home: HomePage(),
+    title: 'Stream Demo',
+  ));
+}
+
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Stream Demo'),
+      ),
+      body: Center(
+        child: StreamBuilder(
+          initialData: 0,
+          stream: _stream(),
+          builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return Text(
+                '1 Minute Completed',
+                style: TextStyle(
+                  fontSize: 30.0,
+                ),
+              );
+            } else if (snapshot.connectionState == ConnectionState.waiting) {
+              return Text(
+                'Waiting For Stream',
+                style: TextStyle(
+                  fontSize: 30.0,
+                ),
+              );
+            }
+            return Text(
+              '00:${snapshot.data.toString().padLeft(2,'0')}',
+              style: TextStyle(
+                fontSize: 30.0,
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Stream<int> _stream() {
+    Duration interval = Duration(seconds: 1);
+    Stream<int> stream = Stream<int>.periodic(interval, transform);
+    stream = stream.take(59);
+    return stream;
+  }
+
+  int transform(int value) {
+    return value;
+  }
+}
+
+
+
+
+【StreamBuilder も組み合わせた例: 2】
+
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(
+    home: HomePage(),
+    title: 'Stream Demo',
+  ));
+}
+
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Stream Demo'),
+      ),
+      body: Center(
+        child: StreamBuilder<int>(
+          initialData: 0,
+          stream: _stream(),
+          builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return Text(
+                '1 Minute Completed',
+                style: TextStyle(
+                  fontSize: 30.0,
+                ),
+              );
+            } else if (snapshot.connectionState == ConnectionState.waiting) {
+              return Text(
+                'Waiting For Stream',
+                style: TextStyle(
+                  fontSize: 30.0,
+                ),
+              );
+            }
+            return Text(
+              '00:${snapshot.data.toString().padLeft(2,'0')}',
+              style: TextStyle(
+                fontSize: 30.0,
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Stream<int> _stream() {
+    Duration interval = Duration(seconds: 1);
+    Stream<int> stream = Stream<int>.periodic(interval, transform);
+    stream = stream.take(59);
+    return stream;
+  }
+
+  int transform(int value) {
+    return value;
+  }
+}
+
+class Story {
+  Story({
+    this.id,
+    this.title,
+    this.summary,
+    this.thumbnailImagePath,
+    this.isRead,
+  });
+  
+  int id;
+  String title;
+  String summary;
+  String thumbnailImagePath;
+  bool isRead;
+}
+
+
+
+## List<クラス> を返したい
+
+Stream<List<Tasks>> などのストリームを返すようにしたい。
+
+
+abstract class Story with _$Story {
+  factory Story({
+    @required int id,
+    @required String title,
+    @required String summary,
+    @required String thumbnailImagePath,
+    @required bool isRead,
+  }) = _Story;
+
+
+
+
+  Stream<int> _bids = (() async* {
+    await Future<void>.delayed(Duration(seconds: 1));
+    yield 1;
+    await Future<void>.delayed(Duration(seconds: 1));
+  })();
+  
+  
+
+  Stream<List<Story>> getStoryList = (() async* {
+    
+    List<Story> list = [
+    
+      Story(
+			  int id: 100,
+			  title: 'title_100',
+			  summary: 'summy_100',
+			  thumbnailImagePath: 'https://images-fe.ssl-images-amazon.com/images/I/71mvwnmVdTL._AC_UL100_SR100,100_.jpg',
+			  isRead: false,
+      ),
+    
+    
+    ];
+    
+    await Future<void>.delayed(Duration(seconds: 1));
+    yield list;
+    await Future<void>.delayed(Duration(seconds: 1));
+  })();
+  
+  
+
+  Stream<int> _stream() {
+    Duration interval = Duration(seconds: 1);
+    Stream<int> stream = Stream<int>.periodic(interval, transform);
+    stream = stream.take(59);
+    return stream;
+  }
+
+
+
+
+
+
+## StreamController
+
+
+StreamController<double> controller = StreamController<double>();
+Stream stream = controller.stream;
+
+controller.add(12);
+
+
+
+
+stream.listen((value) {
+  print('Value from controller: $value');
+});
+
+----
+
+
+  Stream<int> _stream() {
+    
+    StreamController<double> controller = StreamController<double>();
+    Stream stream = controller.stream;
+
+    
+
+    controller.add(12);
+    
+    return stream;
+  }
+
+    
+    Duration interval = Duration(seconds: 1);
+    Stream<int> stream = Stream<int>.periodic(interval, transform);
+    stream = stream.take(59);
+    return stream;
+    
+    
+    
+  }
+
+
+
+
+-----
+
+  final StreamController<List<Member>> _membersController =
+      StreamController<List<Member>>.broadcast();
+
+  Stream getMembers(String batchId) { //passing a batch id
+    _batchCollectionReference
+        .document(batchId)
+        .snapshots()
+        .map((batchSnapshot) => Batch.fromData( //return as Batch type
+            data: batchSnapshot.data, batchId: batchSnapshot.documentID))
+        .listen((snapshot) {
+
+      List<String> members = snapshot.members; //list of members
+
+      members.forEach((member) {
+        var data = _membersCollectionReference
+            .document(member)
+            .snapshots()
+            .map((memberData) => Member.fromData(data: memberData.data)); //return as Member type
+      
+      members.forEach((member) {
+        var data = _membersCollectionReference
+            .document(member)
+            .snapshots()
+            .map((memberData) => Member.fromData(data: memberData.data)).toList();
+            
+            
+
+        _membersController.add(data);
+      });
+    });
+
+    return _membersController.stream;
+  }
+
+
+
+final StreamController<List<Member>> _membersController = StreamController<List<Member>>.broadcast();
+
+  /// Inputs
+  Function(List<Member>) get changeMembers => _membersController.sink.add;
+
+  /// Getters
+  String get members => _membersController.value;
+  
+  
+  _membersController.sink.add(data);
+  
+
+## periodic
+
+Example 1:
+Stream .periodic() → Stream < T >
+
+/// asynchronous data 
+main() async {
+  /// インターバルを設定
+  Duration interval = Duration(seconds: 2);
+  
+  /// Stream .periodic: Creates a stream that repeatedly emits events at period intervals.
+  Stream<int> stream = Stream<int>.periodic(interval, callback);
+
+  await for(int i in stream){
+    print(i);
+  }
+}
+
+/// コールバック関数 modify the given value to even number.
+int callbank(int value){
+  return ( value + 1 ) * 2;
+}
+
+
+
+## take
+
+Example 2:
+Stream.take(int count) → Stream < T >
+
+
+// asynchronous data 
+main() async {
+  Duration interval = Duration(seconds: 1);
+  Stream<int> stream = Stream<int>.periodic(interval,transform);
+  // Added this statement
+  stream = stream.take(5);
+
+await for(int i in stream){
+    print(i);
+  }
+}
+
+int transform(int x){
+  return (x + 1) * 2;
+}
+
+
+
+
+
+Using Streams in Flutter
+https://medium.com/@ayushpguptaapg/using-streams-in-flutter-62fed41662e4
+
+Part 1: Creating a simple stream
+
+@override
+void initState() {
+  super.initState();
+  
+  print("Creating a sample stream...");
+  /// fromFuture
+  Stream<String> stream = Stream.fromFuture(getData());
+  print("Created the stream");
+
+  stream.listen((data) {
+    print("DataReceived: "+data);
+  }, onDone: () {
+    print("Task Done");
+  }, onError: (error) {
+    print("Some Error");
+  });
+  
+  print("code controller is here");
+}
+
+Future<String> getData() async {
+  await Future.delayed(Duration(seconds: 5)); //Mock delay 
+  print("Fetched Data");
+  return "This a test data";
+}
+
+
+
+
+## mockito を使う
+
+抜粋URL
+https://github.com/dart-lang/mockito/issues/223
+
+class Foo {
+  StreamSubscription _subscription;
+  
+  Foo(Stream stream) {
+    _subscription = stream.listen((data) {
+      // some logic that needs to be unit tested
+    });
+  }
+}
+Is it possible to use mockito to mock the injected Stream? I've tried
+
+class MockStream extends Mock implements Stream {}
+
+test('', () {
+  final mockStream = MockStream():
+  when(mockStream).thenAnswer((_) => Stream.fromIterable([...]));
+
+  final foo = Foo(mockStream);
+
+  ...
+});
+
+
+thenAnswer
+https://pub.dev/documentation/mockito/latest/mockito/PostExpectation/thenAnswer.html
+
+
+
+-----
+import 'package:mockito/mockito.dart';
+
+class MS extends Mock implements Stream<int> {}
+
+void main() async {
+  var stream = MS();
+  when(stream.first).thenAnswer((_) => Future.value(7));
+  print(await stream.first);
+
+  when(stream.listen(any)).thenAnswer((Invocation invocation) {
+    var callback = invocation.positionalArguments.single;
+    callback(1);
+    callback(2);
+    callback(3);
+  });
+
+  stream.listen((e) async => print(await e));
+}
+
+
+
+### Mock a stream
+
+https://xspdf.com/resolution/54634009.html
+
+
+Try the thenAnswer instead of thenReturn : Answer
+
+<Stream> answer = new Answer<Stream>() {
+  public Stream answer(InvocationOnMock 
+  
+ Simply mock it. No need to use NetworkStream or Stream in your tests (refer to the last bit of code in the original question, it contains 
+
+
+## 用語
+
+sink 
+listen
+
+
+
+## 公式マニュアル
+
+Stream<T> class
+https://api.flutter.dev/flutter/dart-async/Stream-class.html
+  →→ 役に立つことは何も書いていないように見える
+  
+
+
+# BLoC/RxDart
+
+BLoC/RxDart を自分がイチから使うことはないが、
+よくあるサンプルが BLoC/RxDart を使ったものになっていて、
+そのソースコードを理解したり、Provider/Riverpod に変更する場合に、
+BLoC/RxDart の知識が必要になることが多い。
+
+【BLoC/RxDart入門】 Flutterの公式チュートリアルを書き換える
+https://qiita.com/sensuikan1973/items/64f1a6235bd8ecaf9067
+  Startup Word Generator と お気に入り機能のやつ。
+
+
+Stream/RxDart初心者のためのBLoC入門
+https://qiita.com/tetsufe/items/521014ddc59f8d1df581
+
